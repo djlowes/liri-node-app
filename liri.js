@@ -57,9 +57,12 @@ function tweets() {
     if (!error && response.statusCode === 200) {
       for (let i = 0; i < tweets.length; i++) {
         console.log(tweets[i].user.screen_name + ": " + tweets[i].text);
+        log(tweets[i].user.screen_name + ": " + tweets[i].text);
+
       }
     } else {
-      console.log("Tweets failed to load, this is the error: " + error)
+      console.log("Tweets failed to load, this is the error: " + error);
+      log("Tweets failed to load, this is the error: " + error);
     }
   });
 }
@@ -94,18 +97,53 @@ function imdb() {
   request.get(queryURL, function(error, response, body) {
     if (!error && response.statusCode === 200) {
       // console.log(JSON.parse(body))
-      console.log("Movie Title: " + JSON.parse(body).Title)
-      console.log("Year Released: " + JSON.parse(body).Year)
-      console.log("IMDB Rating: " + JSON.parse(body).imdbRating)
-      console.log("Rotten Tomatoes Score: " + JSON.parse(body).Ratings[1].Value)
-      console.log("Country: " + JSON.parse(body).Country)
-      console.log("Language: " + JSON.parse(body).Language)
-      console.log("Plot: " + JSON.parse(body).Plot)
-      console.log("Actors: " + JSON.parse(body).Actors)
-      }
-    else {
-      console.log("Movie details failed to load, this is the error: " + error)
+      console.log("Movie Title: " + JSON.parse(body).Title);
+      log("Movie Title: " + JSON.parse(body).Title);
+      console.log("Year Released: " + JSON.parse(body).Year);
+      log("Year Released: " + JSON.parse(body).Year);
+      console.log("IMDB Rating: " + JSON.parse(body).imdbRating);
+      log("IMDB Rating: " + JSON.parse(body).imdbRating);
+      console.log("Rotten Tomatoes Score: " + JSON.parse(body).Ratings[1].Value);
+      log("Rotten Tomatoes Score: " + JSON.parse(body).Ratings[1].Value);
+      console.log("Country: " + JSON.parse(body).Country);
+      log("Country: " + JSON.parse(body).Country);
+      console.log("Language: " + JSON.parse(body).Language);
+      log("Language: " + JSON.parse(body).Language);
+      console.log("Plot: " + JSON.parse(body).Plot);
+      log("Plot: " + JSON.parse(body).Plot);
+      console.log("Actors: " + JSON.parse(body).Actors);
+      log("Actors: " + JSON.parse(body).Actors);
+    } else {
+      console.log("Movie details failed to load, this is the error: " + error);
+      log("----ERROR----Movie details failed to load, this is the error: " + error + "----END ERROR----");
     }
   })
+}
 
+//do-what-it-says
+function simon() {
+  fs.readFile("random.txt", "utf8", function(error, data) {
+    if (!error) {
+      //console.log(data)
+      var arr = data.split(",");
+      command = arr[0];
+      query = arr[1].replace(/\n$/, "");
+      // console.log(arr)
+      // console.log(query)
+      // console.log(command)
+      main();
+    } else {
+      return console.log("Simon says that there was an error with this request, this is the error: " + error);
+      log("Simon says that there was an error with this request, this is the error: " + error);
+    }
+  });
+}
+
+//create a file called log.txt and log all results and errors
+function log(text) {
+    fs.appendFile("log.txt", text + "\n", function(error) {
+        if (error) {
+            console.log("Failed attempt to log text. This is the error: " + error );
+        }
+    });
 }
