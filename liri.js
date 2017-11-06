@@ -2,7 +2,7 @@
 var keys = require("./keys.js");
 var fs = require("fs");
 var twitter = require('twitter');
-var spotify = require('node-spotify-api');
+var Spotify = require('node-spotify-api');
 var request = require('request');
 
 
@@ -69,7 +69,7 @@ function tweets() {
 
 // spotify-this-song
 function spotify() {
-  let spot = new spotify({
+  let spot = new Spotify({
     id: keys.spotifyKeys.client_ID,
     secret: keys.spotifyKeys.client_Secret
   });
@@ -80,11 +80,20 @@ function spotify() {
     type: 'track',
     query: query
   };
-  spot.search(params, function(err, data) {
-    if (err) {
-      return console.log('Error occurred: ' + err);
+  spot.search(params, function(error, response) {
+    if (error) {
+      return console.log('Error occurred: ' + error);
+    } else {
+      // console.log(response.tracks.items[0]);
+      console.log("Artist: " + response.tracks.items[0].album.artists[0].name);
+      log("Artist: " + response.tracks.items[0].album.artists[0].name);
+      console.log("Song: " + response.tracks.items[0].name);
+      log("Song: " + response.tracks.items[0].name);
+      console.log("Preview Link: " + response.tracks.items[0].preview_url);
+      log("Preview Link: " + response.tracks.items[0].preview_url);
+      console.log("Album: " + response.tracks.items[0].album.name);
+      log("Album: " + response.tracks.items[0].album.name);
     }
-    console.log(data);
   });
 }
 
@@ -141,9 +150,9 @@ function simon() {
 
 //create a file called log.txt and log all results and errors
 function log(text) {
-    fs.appendFile("log.txt", text + "\n", function(error) {
-        if (error) {
-            console.log("Failed attempt to log text. This is the error: " + error );
-        }
-    });
+  fs.appendFile("log.txt", text + "\n", function(error) {
+    if (error) {
+      console.log("Failed attempt to log text. This is the error: " + error);
+    }
+  });
 }
