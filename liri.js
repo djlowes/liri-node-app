@@ -6,11 +6,6 @@ var Spotify = require('node-spotify-api');
 var request = require('request');
 
 
-// console.log("--------------------------");
-// console.log("Twitter Keys and Access Tokens");
-// console.log(keys);
-// console.log("--------------------------");
-
 //Select from 4 command options
 var command = process.argv[2];
 
@@ -20,7 +15,6 @@ var query = process.argv.slice(3).join(" ");
 
 //Determine which function to run
 main();
-
 function main() {
   switch (command) {
     case "my-tweets":
@@ -58,7 +52,6 @@ function tweets() {
       for (let i = 0; i < tweets.length; i++) {
         console.log(tweets[i].user.screen_name + ": " + tweets[i].text);
         log(tweets[i].user.screen_name + ": " + tweets[i].text);
-
       }
     } else {
       console.log("Tweets failed to load, this is the error: " + error);
@@ -66,6 +59,7 @@ function tweets() {
     }
   });
 }
+
 
 // spotify-this-song
 function spotify() {
@@ -96,6 +90,7 @@ function spotify() {
     }
   });
 }
+
 
 // movie-this
 function imdb() {
@@ -129,6 +124,7 @@ function imdb() {
   })
 }
 
+
 //do-what-it-says
 function simon() {
   fs.readFile("random.txt", "utf8", function(error, data) {
@@ -148,11 +144,12 @@ function simon() {
   });
 }
 
+
 //create a file called log.txt and log all results and errors
 function log(text) {
   fs.appendFile("log.txt", text + "\n", function(error) {
     if (error) {
-      console.log("Failed attempt to log text. This is the error: " + error);
+      console.log("Text log failed to load. This is the error: " + error);
     }
   });
 }
